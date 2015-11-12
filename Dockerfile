@@ -29,7 +29,7 @@ RUN chmod +x /app/.profile.d/python.sh
 RUN . /app/.profile.d/python.sh && curl -s https://bootstrap.pypa.io/get-pip.py | /app/.heroku/python/bin/python
 
 ONBUILD ADD requirements.txt /app/user/
-ONBUILD RUN /app/.heroku/python/bin/pip install -r requirements.txt
+ONBUILD RUN . /app/.profile.d/python.sh && /app/.heroku/python/bin/pip install -r requirements.txt
 ONBUILD ADD . /app/user/
 
 ENTRYPOINT ["/usr/bin/init"]
