@@ -1,5 +1,5 @@
 # Inherit from Heroku's stack
-FROM heroku/cedar:14
+FROM heroku/heroku:16
 
 # Internally, we arbitrarily use port 3000
 ENV PORT 3000
@@ -19,7 +19,7 @@ WORKDIR /app/user
 COPY ./init /usr/bin/init
 
 # Install Python
-RUN curl -s https://lang-python.s3.amazonaws.com/cedar-14/runtimes/$PYTHON_VERSION.tar.gz | tar zx -C /app/.heroku/python
+RUN curl -s https://lang-python.s3.amazonaws.com/heroku-16/runtimes/$PYTHON_VERSION.tar.gz | tar zx -C /app/.heroku/python
 
 # Export the Python environment variables in .profile.d
 RUN echo 'export PATH=$HOME/.heroku/python/bin:$PATH PYTHONUNBUFFERED=true PYTHONHOME=/app/.heroku/python LIBRARY_PATH=/app/.heroku/vendor/lib:/app/.heroku/python/lib:$LIBRARY_PATH LD_LIBRARY_PATH=/app/.heroku/vendor/lib:/app/.heroku/python/lib:$LD_LIBRARY_PATH LANG=${LANG:-en_US.UTF-8} PYTHONHASHSEED=${PYTHONHASHSEED:-random} PYTHONPATH=${PYTHONPATH:-/app/user/}' > /app/.profile.d/python.sh
